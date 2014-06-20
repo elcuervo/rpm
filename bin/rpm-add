@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -eu
+
+dep_file=.gems
+
+[[ -w $dep_file ]] || touch "$dep_file"
+
+add=$(comm -13 <(cat "$dep_file") <(echo "$@"))
+
+if [[ $add != "" ]]; then
+ for dep in $add; do echo "$dep" >> $dep_file; done
+fi

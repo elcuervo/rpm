@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+if command -v "rpm-$1" > /dev/null
+then
+  plugin=$1 && shift && rpm-$plugin $@ && exit
+else
+  rpm-help && exit 1
+fi
