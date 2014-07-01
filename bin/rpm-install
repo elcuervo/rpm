@@ -4,7 +4,7 @@ set -eu
 
 dep_file=${1-.gems}
 
-[[ ! -f $dep_file ]] && echo ">> No .gems file" && exit 1
+[[ ! -r $dep_file ]] && echo ">> No .gems file" && exit 1
 
 deps=$(sed 's/#.*//' < $dep_file | sort)
 installed_deps=$(ruby -e "puts Gem::Specification.map { |g| [g.name, g.version].join(':') }")
