@@ -7,9 +7,9 @@ dep_file=${1-.gems}
 [[ ! -r $dep_file ]] && echo ">> No .gems file" && exit 1
 
 deps=$(sed 's/#.*//' < $dep_file | sort)
-installed_deps=$(ruby -e "puts Gem::Specification.map { |g| [g.name, g.version].join(':') }")
+installed_deps=$(ruby -e "puts Gem::Specification.map { |g| [g.name, g.version].join(':') }.sort")
 install=$(comm -13 <(echo "$installed_deps") <(echo "$deps"))
 
-[[ $install != "" ]] && echo ">> Installing deps" && gem install $install
+[[ $install != "" ]] && echo ">> Installing deps" && gem install --no-document $install
 
 echo ">> Ready to go"
